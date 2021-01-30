@@ -1,0 +1,117 @@
+<!Doctype>
+<html>
+<head>
+<link href="https://fonts.googleapis.com/css2?family=Oswald" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css2?family=Bitter" rel="stylesheet"> 
+<title>Оформление</title>
+<style>
+h1{
+text-align:center;	
+font-family:Oswald;
+font-size:50px;
+color: #0066cc;
+font-style:italic;
+}
+.grid-container{
+display: grid;
+  grid-template-areas:
+    'left header header header header header'
+    'menu main main main main main'
+    'menu main main main main main'
+	'bottom bottom bottom bottom bottom bottom';
+  grid-template-rows: 50% 50% 50% 50% 50% 50%;
+  grid-template-columns: auto auto auto auto auto auto;
+  
+  grid-gap: 10px;
+  padding: 10px;
+}
+.item1 { grid-area: header; border-style:solid; }
+.item2 { grid-area: menu; border-style:solid;
+height: 45vh;}
+.item3 { grid-area: main; border-style:solid;
+height: 50vh;}
+.item4 { grid-area: left; border-style:solid;}
+.item5 { grid-area: bottom; border-style:solid;
+bottom: 0;
+right:-1%;
+}
+a{
+	font-size: 100%;
+	text-decoration:none;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #339933;
+}
+li {
+  float: left;
+}
+li a {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #194d19;
+}
+.menu {
+  overflow: hidden;
+  background-color: #339933;
+  width: 100%;
+  margin: 1%;
+  padding: 0;
+}
+.style-li{
+  overflow: hidden;
+  background-color: #339933;
+  position: fixed;
+  bottom: 0;
+  right:-1%;
+  width: 100%;
+  margin: 1%;
+  padding: 0;
+  font-size:50%;
+}
+.tab{
+text-indent: 50px;
+font-family: Bitter;
+font-size: 100%;
+}
+</style>
+</head>
+<body>
+
+
+<div class="grid-container">
+	<div class="item1"><h1>Глобални компютърни мрежи</h1></div>
+	<div class="item2">Menu</div>
+	<div class="item3"><p class="tab"> Глобалната компютърна мрежа е изградена от свързани една с други локални мрежи. Тя обхваща широки географски области,
+	като използва WAN връзки. Използват се различни начини за комуникация за свързване на компютри в различни градове, държави и дори различни континенти.
+	Най-честно използваният начин за връзка на по-големи разстояния е оптичния кабел.
+	Такива кабели има дори по дъното на океана между континентите.
+	Географски погледнато глобалната мрежа е най-голямата от регионалната,районната, локалната и персоналната комуникационна мрежа. 
+	Най-голямата, а и най-известната за сега глобална мрежа е Интернет.</p>
+	<p class="tab">Когато ние седим пред компютъра или телефона си и искаме някаква информация, избираме да питаме търсачка или да отворим директно сайт.
+	Нашата заявка се приема от рутера в нашата локална мрежа, който го препраща към следващия по веригата и така нашето запитване стига до мястото, което ще ни отговори. 
+	Сървърът отговаря на нашата заявка и пакета през различните мрежи стига до нас.</p>
+	</div>
+	<div class="item4"><img src="Logo_1.bmp" width="150px" height="150px"></div>
+	<div class="menu"><ul>
+		<li class="style-li"><a href="#home">POPOPOPOPOPOPO</a></li>
+	</ul></div>
+	
+
+
+
+
+
+
+
+</body>
+</html>

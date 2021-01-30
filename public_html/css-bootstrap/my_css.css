@@ -1,0 +1,71 @@
+<style>
+	p{
+		text-indent: 1.5em;		
+	}
+
+	.login {
+		margin-bottom:100px;
+	}
+	.navbar {
+	
+	}
+
+	.dropdown-menu {
+		background-color: DarkGrey;
+		min-width:250px;
+	}
+
+	img:hover {
+		opacity: 1.0;
+		border-style: solid;
+	}
+	
+	html, body {
+		height: 100%;
+		background: url("/img/bravi2/brava99.png") no-repeat center center fixed; 
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+	}
+	.heightForm {
+		
+		min-width:80%;
+		min-height:550px;
+		padding-top: 50px;
+
+	}
+	.th-top{
+		border-top-left-radius: 8px;
+		border-top-right-radius: 8px;
+		padding-left:10px;
+		text-align:center;
+	}
+	th{
+		padding-left:5px;
+		background:rgb(129,192,182);
+	}
+	tr:nth-child(even) {
+		background-color:#ebecda;
+	}
+	tr:last-child {
+		border-radius: 10px;
+	}
+
+	table{
+		padding-left:10px;
+		text-align:center;
+		font-family: sans-serif,verdana,arial;
+		font-size:14px;
+		color:#333333;
+		border-radius: 10px;
+		box-shadow: 5px 5px 10px 5px  rgba(45, 39, 37, 0.47);
+		overflow: hidden;
+		
+	}
+	td {
+		padding-left:5px;
+		padding:2px;
+	}
+	
+</style>
