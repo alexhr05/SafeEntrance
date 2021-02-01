@@ -61,7 +61,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']==true  && $_SESSION['lifetime'
 		$form_log .= '	<div class="w-100 h6 ">';
 		$form_log .= '		<label class="w-25 float-left " for="username">Потребителско име:</label>';
 		$form_log .= '		<div class="form-inline w-100 ">';
-		$form_log .= '			<input type="text" name="username5" value="'.$username5.'" maxlength="50" id="username" class="form-control w-50 mr-1" >';
+		$form_log .= '			<input type="text" name="username5" value="'.$username5.'" maxlength="50" id="username" class="form-control w-50 mr-1" autofocus>';
 
 		$checkError = checkUsername ($username5);
 		if ( $checkError != "" && $send_button == "yes" ) {

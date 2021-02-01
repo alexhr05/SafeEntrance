@@ -45,11 +45,16 @@ $menu = '
         <li class="nav-item pl-2">
             <a class="nav-link" href="/index.php?m=7">Контакти</a>
         </li>';
-
 	if ( isset($_SESSION['auth']) && $_SESSION['auth']==true  && $_SESSION['lifetime'] > time() and $_SESSION['userType']==$GLOBALS["userTypeAdmin"] )
-    $menu .= '   <li class="nav-item dropdown order-1 " id="dropdownMenu1" class="btn btn-outline-secondary dropdown-toggle">
+    $menu .= ' 
+        <li class="nav-item pl-2">
+            <a class="nav-link" href="/index.php?m=14">Отключване</a>
+        </li>
+
+
+				<li class="nav-item dropdown order-1 " id="dropdownMenu1" class="btn btn-outline-secondary dropdown-toggle">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Админ Панел
+                            Администраторски Панел
                         </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="/index.php?m=13">Потребители</a>
@@ -110,7 +115,7 @@ $menu = '
                        <li class="px-3 py-2">
                            <form class="form" role="form" method="POST" action="index.php?m=4">
                                 <div class="form-group">
-                                    <input id="userInput" placeholder="Електронен адрес или име" class="form-control form-control-sm" type="text" required="" name="userInput">
+                                    <input id="userInput" placeholder="Електронен адрес или име" class="form-control form-control-sm" type="text" required="" name="userInput" >
                                 </div>
                                 <div class="form-group">
                                     <input id="passwordInput" placeholder="Парола" class="form-control form-control-sm" type="password" required="" name="pass1">
@@ -119,7 +124,7 @@ $menu = '
                                     <button type="submit" class="btn btn-secondary btn-block" name="send_button">Вход</button>
                                 </div>
                                 <div class="form-group text-center">
-                                    <small><a href="#" data-toggle="modal" data-target="#modalPassword">Забравена парола</a></small>
+                                    <small><a href="#" data-toggle="modal" data-target="#modalPassword" style="color:white">Забравена парола</a></small>
                                 </div>
                             </form>
                         </li>

@@ -27,7 +27,7 @@ function check_in ($conn) {
 		$form_log .= '<font style="font-size:2vw">Вход за регистрирани потребители</font></div>';
 		$form_log .= '<div class="w-75 pt-1 h6 ">';
 		$form_log .= '<label for="userInput" class="form-label">Потребителско име или Електронна поща:</label>';
-		$form_log .= '<input type="username" class="form-control form-control w-75" id="userInput"  value="'.$userInput.'" name="userInput" >';
+		$form_log .= '<input type="username" class="form-control form-control w-75" id="userInput"  value="'.$userInput.'" name="userInput" autofocus>';
 		$form_log .= '</div>';
 	
 		// Проверява дали в полето userInput са въведени коректни стойности
