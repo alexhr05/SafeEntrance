@@ -1,6 +1,6 @@
 <?php
 
-function change_profile ($conn) {
+function changeProfile ($conn) {
 	$form_log		= "";
 	$Old_pass		= "";
 	$New_pass		= "";

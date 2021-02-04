@@ -1,6 +1,6 @@
 <?php
 
-function check_in ($conn) {
+function logIn ($conn) {
 	$form_log		= "";
 	$errorsFound 	= "";
 	$form_login_success = "";
@@ -23,8 +23,8 @@ function check_in ($conn) {
 		// Ако потребителя НЕ Е логнат - показва форма за логване
 		$form_log .= '<form name="enter_fm" action="" method="post" class="row g-3">';
 
-		$form_log .= '<div class="w-75 pt-3 pb-3 h6 ">';
-		$form_log .= '<font style="font-size:2vw">Вход за регистрирани потребители</font></div>';
+		$form_log .= '<div class="w-75 pt-3 pb-3 h4 ">';
+		$form_log .= 'Вход за регистрирани потребители</div>';
 		$form_log .= '<div class="w-75 pt-1 h6 ">';
 		$form_log .= '<label for="userInput" class="form-label">Потребителско име или Електронна поща:</label>';
 		$form_log .= '<input type="username" class="form-control form-control w-75" id="userInput"  value="'.$userInput.'" name="userInput" autofocus>';
@@ -85,8 +85,8 @@ function check_in ($conn) {
 		}	
 
 		$form_log .= '<div class="w-75 pt-1 h6 ">';
-		$form_log .= '	<a href="#home" class="text-white">Забравили сте си паролата?</a>';
-		$form_log .= '	<a href="registrirai_se.html" class="text-white">Ако сте нов потребител : Регистрирайте се</a>';
+		$form_log .= '	<a href="index.php?m=17" class="text-white">Забравили сте си паролата?</a>';
+		$form_log .= '	<a href="index.php?m=65" class="text-white">Ако сте нов потребител : Регистрирайте се</a>';
 		$form_log .= '</div>';
 		$form_log .= '<div class="w-75 pt-4 pb-4 h6 ">';
 		$form_log .= '	<button type="submit" class="btn btn-dark px-5 py-2 btn-lg" name="send_button" value="Вход" id=submit1>Вход</button></div>';

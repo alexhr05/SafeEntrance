@@ -22,21 +22,25 @@ include ($libdir."defines.php");
 include ($libdir."database.php");
 //include ($libdir."vars.php");
 include ($libdir."menu.php");
-include ($libdir."vhod.php");
-include ($libdir."registrirai_se.php");
-include ($libdir."kontakti.php");
-include ($libdir."za_nas.php");
-include ($libdir."pravila.php");
-include ($libdir."izhod.php");
-include ($libdir."profil.php");
-include ($libdir."potrebiteli.php");
-include ($libdir."potvarzdenie.php");
-include ($libdir."allowCards.php");
-include ($libdir."register_entrance.php");
+include ($libdir."registration.php");
+include ($libdir."contacts.php");
+include ($libdir."aboutUs.php");
+include ($libdir."rules.php");
+include ($libdir."logOut.php");
+include ($libdir."changeProfile.php");
+include ($libdir."users.php");
+include ($libdir."verification.php");
+include ($libdir."allowChips.php");
+include ($libdir."registerEntrance.php");
 include ($libdir."spravki.php");
+include ($libdir."unlocking.php");
+include ($libdir."showAddChipToUser.php");
+include ($libdir."deleteUsers.php");
+include ($libdir."forgottenPassword.php");
+include ($libdir."logIn.php");
 
-include ($libdir."electronnaBravaZaklucvane.php");
-include ($libdir."electronnaBravaControl.php");
+include ($libdir."showControl.php");
+include ($libdir."showBravi.php");
 
 
 getPostIfSet(array('m'));
@@ -49,10 +53,18 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']==true && $_SESSION['lifetime']
 	// Ако е логнат потребител - опреснява времето, за да НЕ го разлогне
 	$_SESSION['lifetime']=time()+ 60*30;		// ДА СЕ ПРОВЕРИ ВРЕМЕТО - сега е 30 минути   30*60
 	
+
+$_GET = array_map("za6titi", $_GET);
+$_POST = array_map("za6titi", $_POST);
+$_SESSION = array_map("za6titi", $_SESSION);
+$_COOKIE = array_map("za6titi", $_COOKIE);
+$_SERVER = array_map("za6titi", $_SERVER);
+
+
 	// Проверява дали данните за сесията са коректни
 	if ( isset($_POST['userid'] ) or isset ($_GET['userid'] ) )
 		if ( checkInt($_SESSION['userid']) != "" ) {
-			logout ();
+			logOut ();
 			return;
 		}
 
@@ -60,7 +72,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']==true && $_SESSION['lifetime']
 } else {
 	// Ако е логнат потребител, ще го разлогне, поради изтичане на време
 	if ( isset($_SESSION['lifetime']) and $_SESSION['lifetime'] < time() ) {
-		logout ();
+		logOut ();
 	}
 }
 
@@ -98,34 +110,42 @@ if ( $m == 0 )
 		<h1 class="display-4">Бъдете в крак с времето и управлявайте Вашите имоти умно от разстояние</h1>
         ';  
 else  if( $m==4 ){
-	$main_form = check_in ($conn);
+	$main_form = logIn ($conn);
 }else if( $m==5 and isset($_SESSION['auth']) && $_SESSION['auth']==true ){
-	$main_form = change_profile ($conn);
+	$main_form = changeProfile ($conn);
 }else if( $m==6 ){
-	$main_form = regsiter_in ($conn);
+	$main_form = registration ($conn);
 }else if( $m==65 ){
-	$main_form = pravila ();
+	$main_form = rules ();
 }else if( $m==66 ){
 	getPostIfSet(array('mail1','keyss'));
-	$main_form = potvarzdenie ($mail1, $keyss, $conn);
+	$main_form = verification ($mail1, $keyss, $conn);
 }else if($m==7){
-	$main_form = contact_us ();	
+	$main_form = contacts ();	
 }else if($m==8){
-	$main_form = about_us ();	
+	$main_form = aboutUs ();	
 }else if($m==10){
-	$main_form = check_out ();
+	$main_form = logOut ();
 }else if($m==13 and isset($_SESSION['auth']) && $_SESSION['auth']==true and $_SESSION['userType']==$userTypeAdmin){
-	$main_form = show_potrebiteli($conn);
+	$main_form = showUsers($conn);
 }else if($m==101 ){
-	$main_form = show_bravi();
+	$main_form = showBravi();
 }else if($m==102 ){
-	$main_form = show_control();
-}else if($m==9){
-	$main_form=show_allow_cards($conn);
-}else if($m==11){
-	$main_form=show_regsiter($conn);
-}else if($m==12){
-	$main_form=show_spravki($conn);
+	$main_form = showControl();
+}else if($m==9 and isset($_SESSION['auth']) && $_SESSION['auth']==true and $_SESSION['userType']==$userTypeAdmin){
+	$main_form=showAllowChips($conn);
+}else if($m==11 and isset($_SESSION['auth']) && $_SESSION['auth']==true and $_SESSION['userType']==$userTypeAdmin){
+	$main_form=showRegsiterEntrance($conn);
+}else if($m==12 and isset($_SESSION['auth']) && $_SESSION['auth']==true and $_SESSION['userType']==$userTypeAdmin){
+	$main_form=showSpravki($conn);
+}else if($m==14 and isset($_SESSION['auth']) && $_SESSION['auth']==true and $_SESSION['userType']>='1'){
+	$main_form=showUnlocking($conn);
+}else if($m==15 and isset($_SESSION['auth']) && $_SESSION['auth']==true and $_SESSION['userType']==$userTypeAdmin){
+	$main_form=showAddChipToUser($conn);
+}else if($m==16 and isset($_SESSION['auth']) && $_SESSION['auth']==true and $_SESSION['userType']==$userTypeAdmin){
+	$main_form=showDeleteUsers($conn);
+}else if($m==17){
+	$main_form=showForgottenPassword($conn);
 }
 
 // Взима responsive меню, след като направи проверка дали сме или НЕ сме логнати и какви права има дадения потребител

@@ -1,5 +1,5 @@
 <?php
-function show_spravki($conn){
+function showSpravki($conn){
 
 	$logg_all = '
 		<div class="container ">

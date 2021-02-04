@@ -1,5 +1,5 @@
 <?php
-function show_otklucvhane($conn){
+function showUnlocking ($conn){
 
 	$logg_all = '
 		<div class="container ">

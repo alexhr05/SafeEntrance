@@ -1,7 +1,7 @@
 <?php
 
 
-function potvarzdenie($mail1, $keyss, $conn){
+function verification ($mail1, $keyss, $conn){
 $form_log = "";
 
 	$form_log = '

@@ -1,5 +1,5 @@
 <?php
-function contact_us() {
+function contacts() {
 	$form_log = '
 	<div class="container h-75 d-flex align-items-center justify-content-center ">
 		<div class=" w-50 p-4 bg-secondary text-white rounded ">

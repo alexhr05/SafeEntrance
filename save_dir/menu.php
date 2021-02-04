@@ -124,7 +124,7 @@ $menu = '
                                     <button type="submit" class="btn btn-secondary btn-block" name="send_button">Вход</button>
                                 </div>
                                 <div class="form-group text-center">
-                                    <small><a href="#" data-toggle="modal" data-target="#modalPassword" style="color:white">Забравена парола</a></small>
+                                    <small><a href="index.php?m=17" style="color:white">Забравена парола</a></small>
                                 </div>
                             </form>
                         </li>

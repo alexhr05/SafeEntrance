@@ -1,5 +1,5 @@
 <?php
-function pravila() {
+function rules() {
 	
 
 	$gdpr_text 	 = '

@@ -1,6 +1,6 @@
 <?php
 
-function regsiter_in ($conn) {
+function registration ($conn) {
 
 $errorsFound 	= "";
 $form_log 		= "";

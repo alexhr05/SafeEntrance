@@ -1,6 +1,6 @@
 <?php
 
-function about_us() {
+function aboutUs() {
 	
 	$form_log = '
 	<div class="container h-75 d-flex align-items-center justify-content-center ">

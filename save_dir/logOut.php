@@ -1,12 +1,11 @@
 <?php
-
-function check_out () {
+function logOut () {
 
 	$form_log = '
 			<div class="container pt-5  h-50 d-flex align-items-center justify-content-center ">
 				<div class=" w-75 h-50 bg-secondary text-white rounded d-flex align-items-center justify-content-center ">';
 
-	if (isset($_SESSION['auth']) && $_SESSION['auth']==true  && $_SESSION['lifetime'] > time()) {
+	if (isset($_SESSION['auth']) && $_SESSION['auth']==true ) {
 		// Ако потребителя е вече логнат - излиза
 
 		$form_log .= '

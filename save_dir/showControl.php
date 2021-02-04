@@ -1,5 +1,5 @@
 <?php
-function show_control () {
+function showControl () {
 	$form_show = '
 	<div class="container h-100 w-100 ">
 		<div class="w-100 mt-4 p-4 bg-secondary text-white rounded">
