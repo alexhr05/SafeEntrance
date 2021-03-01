@@ -1,96 +1,22 @@
 ﻿<?php
 
-function za6titi($tekst) {
-	//echo "<br>($tekst)";
+// Проверява дали клиента е на мобилно устройство или компютър
+function checkDeviceType() {
+	if ( strpos ($_SERVER['HTTP_USER_AGENT'] , "Android") > 1 or strpos ($_SERVER['HTTP_USER_AGENT'] , "Mobile") > 1 )
+		return "mobile";
+	if ( strpos ($_SERVER['HTTP_USER_AGENT'] , "Win32") > 1 or strpos ($_SERVER['HTTP_USER_AGENT'] , "Win64") > 1 )
+		return "PC";	
+}
+
+// Добавя защити, за да изключи вмъкване на изпълними команди и да предпази базата данни
+function addSlashesText($tekst) {
 	if ( (int)$tekst )
 		return $tekst;
 	else {
 		$tekst = addslashes($tekst);
 		$tekst = htmlspecialchars($tekst, ENT_NOQUOTES);
-	
 		return $tekst;
 	}
-}
-
-// Проверка дали има забранени символи в username
-function checkUsername($username5) 
-{
-	if ( $username5 == "" )
-		return "Полето е празно.";
-
-	if ( strlen ( $username5) <= 3 )
-		return "Въведеното потребителско име е с прекалено малко символи. Въведете повече от 3 символа.";
-	
-	if ( strlen ( $username5) >= 50 )
-		return "Въведената потребителско име е прекалено дълго. Трябва да бъде по-малко от 50 символа.";
-	
-	$possible = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789-_!@#$+.";
-	$bAllowUsername = true;
-	$i = 0;
-	while ($i < strlen ($username5) ) {
-		if ( !strstr($possible, $username5[$i] ) )
-			$bAllowUsername = false;
-		$i++;
-	}
-	
-	if ( !$bAllowUsername )
-		return "В полето има забранени символи. Може да ползвате всички букви на латиница, цифри и символите: ! @ # _ - +";
-	else
-		return "";
-}
-
-// Проверка дали има забранени символи в password
-function checkPassword($pass5) 
-{
-	if ( $pass5 == "" )
-		return "Полето е празно.";
-
-	if ( strlen ( $pass5) <= 1 )
-		return "Въведената парола е прекалено кратка. Трябва да бъде над 8 символа.";
-
-	if ( strlen ( $pass5) >= 50 )
-		return "Въведената парола е прекалено дълга. Трябва да бъде по-малко от 50 символа.";
-	
-	$possible = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789-_!@#$+.";
-	$bAllowUsername = true;
-	$i = 0;
-	while ($i < strlen ($pass5) ) {
-		if ( !strstr($possible, $pass5[$i] ) ) {
-			$bAllowUsername = false;
-			echo "($pass5[$i])";
-		}
-		$i++;
-	}
-
-	if ( !$bAllowUsername )
-		return "В полето има забранени символи. Може да ползвате всички букви на латиница, цифри и символите: ! @ # _ - +";
-	else
-		return "";
-}
-
-function checkRealName($RealName) 
-{
-	if ( $RealName == "" )
-		return "Полето е празно.";
-
-	if ( strlen ( $RealName) <= 3 )
-		return "Въвели сте прекалено малко символи.";
-
-	if ( strlen ( $RealName) >= 68 )
-		return "Въвели сте прекалено много символи. Разрешени са максимум 50 символа.";
-
-	$possible = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789-_!@#$+.абвгдежзийклмнопрстуфхцчшщъьюяАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЬЮЯ";
-	$bAllowUsername = true;
-	$i = 0;
-	while ($i < strlen ($RealName) ) {
-		if ( !strstr($possible, $RealName[$i] ) )
-			return false;
-		$i++;
-	}
-	if ( !$bAllowUsername )
-		return "В полето има забранени символи. Може да ползвате всички букви на кирилица, латиница, цифри и символите: ! @ # _ - +";
-	else
-		return "";
 }
 
 function checkText($Text) 
@@ -147,34 +73,6 @@ function checkEmail($mail1)
 		return "";
 }
 
-// Проверка дали има забранени символи в checkUserOrMail
-function checkUserOrMail($username5) 
-{
-	if ( $username5 == "" )
-		return "Полето е празно.";
-
-	if ( strlen ( $username5) <= 3 )
-		return "Въведеното потребителско име е с прекалено малко символи. Въведете повече от 3 символа.";
-	
-	if ( strlen ( $username5) >= 50 )
-		return "Въведената потребителско име е прекалено дълго. Трябва да бъде по-малко от 50 символа.";
-	
-	$possible = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789-_!@#$+.";
-	$bAllowUsername = true;
-	$i = 0;
-	while ($i < strlen ($username5) ) {
-		if ( !strstr($possible, $username5[$i] ) )
-			$bAllowUsername = false;
-		$i++;
-	}
-	
-	if ( !$bAllowUsername )
-		return "В полето има забранени символи. Може да ползвате всички букви на латиница, цифри и символите: ! @ # _ - +";
-	else
-		return "";
-}
-
-
 function checkInt($userInput) {
 	if ( $userInput == "" )
 		return "Полето е празно.";
@@ -220,28 +118,6 @@ function getPostIfSet($test_vars)
         }
 }
 
-function getpost_ifset_with_result($test_vars)
-{
-    $result = true;
-        if (!is_array($test_vars)) {
-                $test_vars = array($test_vars);
-        }
-        foreach($test_vars as $test_var) {
-                if (isset($_POST[$test_var])) {
-                    global $$test_var;
-                    $$test_var = $_POST[$test_var];
-                } elseif (isset($_GET[$test_var])) {
-                    global $$test_var;
-                    $$test_var = $_GET[$test_var];
-                } else {
-                    $result=false;
-                    break;
-                }
-        }
-        return $result;
-}
-
-
 
 function genRandomPassword($length = 8) {
                 $salt = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -256,11 +132,16 @@ function genRandomPassword($length = 8) {
                 return $makepass;
 }
 
-        
-function getCryptedPassword($clearpass,$salt) {
-	return md5( $clearpass . $salt );
+function cryptoPassword ($pass) {
+	$md5_pass 				= md5($pass);
+	$number1 				=  0;
+	$number2 				= 31;
+	$swapChar 				= $md5_pass[$number1];
+	$md5_pass[$number1] 	= $md5_pass[$number2];
+	$md5_pass[$number2] 	= $swapChar;
+	return md5($md5_pass);
 }
-  
+
 
 function IsName ($string){
 	if (preg_match("/^[ -_A-Za-zА-Яа-я0-9]{5,51}$/", $string))
@@ -282,7 +163,35 @@ function IsPhone ($string){
 		return false;
 }  
 
+// Статус на ВРАТА
+// Сменя надписа от английски на български
+function getDoorStatusLabel ( $englishLabel, $all_minutes) {
+					if ( $all_minutes > 10 )
+						return	'няма връзка';
+					else if ( $englishLabel == "opened" )
+						return	'отворена';
+					else if ( $englishLabel == "closed" )
+						return	'затворена';
+					else if ( $englishLabel == "locked" )
+						return	'заключена';
+					else if ( $englishLabel == "unlocked" )
+						return	'отключена';
+					else if ( $englishLabel == "alarm_door_open" )
+						return	'алармено събитие';
+					else 
+						return 'няма информация';
+	 
+}
 
-
+// Статус на разрешение за влизане
+// Сменя надписа от английски на български
+function getEntranceStatusLabel ( $englishLabel) {
+				if ( $englishLabel == 'enter' )
+					return 'разрешено влизане';
+				if ( $englishLabel == 'close' )
+					return 'отказан достъп';
+				if ( $englishLabel == 'alarm_door_open' )					
+					return 'алармено събитие';
+}
 
 ?>

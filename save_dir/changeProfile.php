@@ -4,7 +4,7 @@ function changeProfile ($conn) {
 	$form_log		= "";
 	$Old_pass		= "";
 	$New_pass		= "";
-	$Check_1		= "";
+	$checkSendEmail	= "";
 	$Repeat_New_pass= "";
 	$errors_log		= "";
 	$errorsFound 	= "";
@@ -17,14 +17,14 @@ function changeProfile ($conn) {
 		$New_pass= $_POST['New_pass'];
 	if ( isset($_POST['Repeat_New_pass'] ) ) 
 		$Repeat_New_pass= $_POST['Repeat_New_pass'];
-	if ( isset($_POST['Check_1'] ) ) 
-		$Check_1= $_POST['Check_1'];
+	if ( isset($_POST['checkSendEmail'] ) ) 
+		$checkSendEmail= $_POST['checkSendEmail'];
 	if ( isset($_POST['send_button'] ) ) 
 		$send_button 	= "yes";;
-
+	
 	$form_log		= '
 	<div class="container pt-5 ">
-	<div class=" w-50 pl-5 bg-secondary text-white rounded mx-auto ">';	
+		<div class=" w-50 pl-5 bg-secondary text-white rounded mx-auto ">';	
 
 	
 	// Проверява дали са въведени данни в поне едно от полетата за парола,
@@ -36,7 +36,7 @@ function changeProfile ($conn) {
 
 	if ( $send_button == "yes"  ) {
 		//	Презаписва дали да се получава мейл или не
-		if ( $Check_1=='on'  )
+		if ( $checkSendEmail=='on'  )
 			$query = "UPDATE `chips`.`users` SET sendEmail='yes' WHERE id='".addslashes($_SESSION['userid'])."'";
 		else
 			$query = "UPDATE `chips`.`users` SET sendEmail='no' WHERE id='".addslashes($_SESSION['userid'])."'";
@@ -52,7 +52,7 @@ function changeProfile ($conn) {
 			$form_log .= '<font style="font-size:2vw">Профил</font></div>';
 			$form_log .='<div class="w-75 pt-1 h6 "><label for="age">Въведете старата си парола:</label><br>';
 			$form_log .='<input type="password" class="form-control   w-75" name="Old_pass" value="'.$Old_pass.'" id="fage"></div>';
-			$checkError = checkPassword ($Old_pass);
+			$checkError = checkText ($Old_pass);
 			if ( $checkError != "" && $send_button == "yes" ) {
 				$form_log 		.= '<div class="w-75 pb-3 h6">';
 				$form_log   	.= '<font style="color:DarkRed">'.$checkError.'</font></div>';
@@ -62,7 +62,7 @@ function changeProfile ($conn) {
 			$form_log .= '					
 					<div class="w-75 pt-1 h6 "><label for="age">Въведете нова парола:</label><br>
 					<input type="password" class="form-control   w-75" name="New_pass" value="'.$New_pass.'" id="fage"></div>';
-			$checkError = checkPassword ($New_pass);
+			$checkError = checkText ($New_pass);
 			if ( $checkError != "" && $send_button == "yes" ) {
 				$form_log 		.= '<div class="w-75 pb-3 h6">';
 				$form_log   	.= '<font style="color:DarkRed">'.$checkError.'</font></div>';
@@ -72,7 +72,7 @@ function changeProfile ($conn) {
 			$form_log .=' 
 			<div class="w-75 pt-1 h6 "><label for="age">Повторете нова парола:</label><br>
 					<input type="password" class="form-control   w-75" name="Repeat_New_pass" value="'.$Repeat_New_pass.'" id="fage"></div>';
-			$checkError = checkPassword ($Repeat_New_pass);
+			$checkError = checkText ($Repeat_New_pass);
 			if ( $checkError != "" && $send_button == "yes" ) {	
 				$form_log 		.= '<div class="w-75 pb-3 h6">';
 				$form_log   	.= '<font style="color:DarkRed">'.$checkError.'</font></div>';
@@ -95,10 +95,10 @@ function changeProfile ($conn) {
 				if ($result && mysqli_num_rows($result) > 0)  {
 					$row1 = mysqli_fetch_assoc($result);
 					$read_pass = $row1['password'];
-					if ( md5($Old_pass) == $read_pass ) {		// Ако старата парола съвпадне с прочетената от базата данни - прави ъпдейт на парола
-						$query = "UPDATE `chips`.`users` SET password='".addslashes(md5($New_pass))."' WHERE id='".addslashes($_SESSION['userid'])."'";
+					if ( cryptoPassword($Old_pass) == $read_pass ) {		// Ако старата парола съвпадне с прочетената от базата данни - прави ъпдейт на парола
+						$query = "UPDATE `chips`.`users` SET password='".addslashes(cryptoPassword($New_pass))."' WHERE id='".addslashes($_SESSION['userid'])."'";
 						$result = mysqli_query($conn, $query);
-						if ( mysqli_affected_rows($conn) ) {
+						if ( mysqli_affected_rows($conn)>0 ) {
 							// Успешно променен статус на потребител
 							$form_log .= '<font style="color:DarkRed"><h5>Паролата е променена успешно.</h5></font>';
 						}
@@ -128,7 +128,7 @@ function changeProfile ($conn) {
 			$form_log .= '			<input class="form-check-input" type="checkbox" id="gridCheck" ';
 			if ($row1['sendEmail']== 'yes')
 				$form_log .= ' checked ';
-			$form_log .= ' name="Check_1">';
+			$form_log .= ' name="checkSendEmail">';
 
 			$form_log .= '			<label class="form-check-label" for="gridCheck">';
 			$form_log .= '				Съгласен съм да получавам електронни съобщения. ';

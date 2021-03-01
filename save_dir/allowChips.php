@@ -1,50 +1,16 @@
 <?php
 function showAllowChips($conn){
 
-	$logg_all = '
-		<div class="container ">
-			<div class=" w-100 p-2 text-black rounded ">';
-	$action 	= "0";
-/*	$id 		= "0";
-	$userType	= "";
-	$deleted	= "";
-	// Прочитаме параметри от линк-а
-	if ( isset($_GET['action'] ) )
-		$action = $_GET["action"];
-	if ( isset($_GET['id'] ) )
-		$id = $_GET["id"];
-	if ( isset($_GET['userType'] ) )
-		$userType = $_GET["userType"];
-	if ( isset($_GET['sendEmail'] ) )
-		$sendEmail = $_GET['sendEmail'];
-	if ( isset($_GET['deleted'] ) )
-		$deleted = $_GET['deleted'];
+	$logg_all = '<div class="container ">
+					<div class=" w-100 p-2 text-black rounded ">';
 
-
-	// Решава каква заявка за кои параметри да се update-не
-	if ( $action == "act" and isset($_GET['userType'] ) ) {
-		$userType = $userType + 1;
-		if ( $userType > $GLOBALS["userTypeAdmin"] )	// Ако е достигнал лимит за админ, сваля го на НУЛА
-			$userType = 0;
-		$query_param = "userType= '".$userType."' ";
-	}
-	//if ( $action == "act" and isset($_GET['sendEmail'] ) )
-
-		if ( $action == "act" and isset($_GET['deleted'] ) )
-		$query_param = "deleted= '".$deleted."' ";
-	*/
-	
 	// Прави справка за ново разрешени чипове за дадения период 
-	$fromDate="2020-05-05";
-	$toDate=date("Y-m-d");
-	$logg_all .= getAllowChips( $fromDate,$toDate, $conn);
-			
+	$fromDate	= "2020-05-05";
+	$toDate		= date("Y-m-d");
+	$logg_all  .= getAllowChips( $fromDate,$toDate, $conn );
 
-     	
-	$logg_all	.= '</div></div>';
+	$logg_all  .= '</div></div>';
 	return $logg_all	;
-		
-	
 }
 
 /*--------------------------------------------------------------------------------------------------------------
@@ -59,29 +25,57 @@ function showAllowChips($conn){
 		$logg_all	- форматиран html код, който директно може да се покаже
 */
 function getAllowChips($startDate, $endDate, $conn){
-	$query="SELECT * FROM `allowchips` WHERE `date_create` between '".$startDate." 00:00:00' And '".$endDate." 23:59:59'";
+	$chipID 		= "0";
+	$action 		= "";
+	$logg_all		= "";
+	$currentLevel 	= "";
 	
-	// Ако началната дата за справка е 1900-00-00 , тогава прави справка и за userid
-	if($startDate == "1900-00-00"){
-		$query .= " AND `userid`='".$_SESSION['userid']."'";
+	if ( isset($_POST['chipID'] ) )
+		$chipID = $_POST['chipID'];
+	if ( isset($_GET['chipID'] ) )
+		$chipID = $_GET['chipID'];
+	if ( isset($_POST['action'] ) )
+		$action = $_POST["action"];
+	if ( isset($_GET['action'] ) )
+		$action = $_GET["action"];
+	if ( isset($_GET['currentLevel'] ) )
+		$currentLevel = $_GET["currentLevel"];
+
+	if ( $action == 'delete'){
+	 	if(checkInt($chipID) == "") {
+			$query = "UPDATE `chips`.`allowchips` SET `userid`='0', `chipOwnerName`='', `date_modify`=now() WHERE id='".addslashes($chipID)."'";
+			$result = mysqli_query($conn, $query);
+			if ( mysqli_affected_rows($conn) ) {
+				// Успешно променен статус на потребител
+				$logg_all .= '<br><b>Успешно изтрихте карта/чип с номер '.$chipID.'</b><br><br>';
+			}
+
+		} else 
+			$logg_all .= 'Грешни параметри. Не може да бъде изтрит карта/чип с номер '.$chipID;
+	} else if ( $action == 'incrementLevel'){
+	 	if ( checkInt($chipID) == "" and checkInt($currentLevel) == "" ) {
+			if ( $currentLevel >= 3 )
+				$currentLevel = 0;
+			else
+				$currentLevel++;
+			$query = "UPDATE `chips`.`allowchips` SET `Level`='".addslashes($currentLevel)."' WHERE id='".addslashes($chipID)."'";
+			$result = mysqli_query($conn, $query);
+		} else 
+			$logg_all .= 'Грешни параметри. Не може да бъде изтрит карта/чип с номер '.$chipID;
 	}
-	
+
+
+	$query  = "SELECT * FROM `allowchips` WHERE `date_create` between '".$startDate." 00:00:00' And '".$endDate." 23:59:59' ORDER BY date_modify DESC";
 	$result = mysqli_query($conn, $query);
-	$logg_all="";
-	$submit5 = "6";
 	if ($result && mysqli_num_rows($result) > 0) {
-		$logg_all .= '<table width=100%><tr><th colspan="12" style="text-align:center" class="th-top"> <b>Разрешени чипове</b>, брой записи : '.mysqli_num_rows($result).'</th></tr>';
-		$logg_all .= '<tr>  <th width=5%  >номер</th>
+		$logg_all .= '<table width=100%><tr><th colspan="12" style="text-align:center" class="th-top h5"> <b>Разрешени чипове</b>, брой записи : '.mysqli_num_rows($result).'</th></tr>';
+		$logg_all .= '<tr>  <th width=5%  >Номер</th>
 							<th width=15% style="text-align:left">Дата въвеждане</th>
 							<th width=15% style="text-align:left">Последно активен</th>
-							<th width=15% >Действие</th>
-							<th width=5%  >UID1</th>
-							<th width=5%  >UID2</th>
-							<th width=5%  >UID3</th>
-							<th width=5%  >UID4</th>
-							<th width=10% >Разрешен</th>
-							<th width=10% >userid</th>
-							<th width=10% >chipOwnerName</th>
+							<th width=15% style="text-align:left" >Индентификатор на чип</th>
+							<th width=10% >Потребителски номер</th>
+							<th width=10% >Притежател на чип</th>
+							<th width=10% >Ниво на достъп</th>
 							<th width=10% >Действие</th>
 							</tr>';
 		   while ($row1 = mysqli_fetch_assoc($result) ) {
@@ -89,54 +83,56 @@ function getAllowChips($startDate, $endDate, $conn){
 				$logg_all	.= '<td >'.$row1['id'].'</td>';
 				$logg_all	.= '<td style="text-align:left"">'.$row1['date_create'].'</td>';
 				$logg_all	.= '<td style="text-align:left" >'.$row1['date_modify'].'</td>';
-				$logg_all	.= '<td>'.$row1['action'].'</td>';
-				$logg_all	.= '<td>'.$row1['UID1'].'</td>';
-				$logg_all	.= '<td>'.$row1['UID2'].'</td>';
-				$logg_all	.= '<td>'.$row1['UID3'].'</td>';
-				$logg_all	.= '<td>'.$row1['UID4'].'</td>';
-				$logg_all	.= '<td>'.$row1['allow'].'</td>';
+				$logg_all	.= '<td style="text-align:left">'.$row1['UID1'].'-'.$row1['UID2'].'-'.$row1['UID3'].'-'.$row1['UID4'].'</td>';
 				$logg_all	.= '<td>'.$row1['userid'].'</td>';
 				$logg_all	.= '<td>'.$row1['chipOwnerName'].'</td>';
+
+				$logg_all	.= '<td>'.$row1['Level'];
+				
+				// Ако е АДМИН -> показва бутон за промяна LEVEL на точи чип
+				if ( $_SESSION['userType']==$GLOBALS['userTypeAdmin'] )
+					$logg_all	.= '<a href="index.php?m=9&action=incrementLevel&chipID='.$row1['id'].'&currentLevel='.$row1['Level'].'">
+										<img src="img/plusOne_v3_25x25.png" style="opacity: 0.3;" height=25px width=25px>
+									</a></td>';
+
 				if($row1['userid']==0){
-					$logg_all	.= '<td><a href="index.php?m=15&cardid='.$row1['id'].'" class="btn btn-secondary w-100">+ Добави потребител</button></a></td>';
-//						$logg_all	.= '<td><button type="button" class="btn btn-danger w-100"  data-target="index.php?m=15&cardid='.$row1['id'].'">Добави потребител</button></td>';
+					$logg_all	.= '<td><a href="index.php?m=15&cardid='.$row1['id'].'" class="btn btn-secondary w-100">+ Добави потребител</a></td>';
 				}else{
-
-					$logg_all	.= '<td><button type="submit" class="btn btn-danger w-100"  data-toggle="modal" value="5" name="submit5" data-target="#exampleModalCenter">
-					- Изтрий потребител
-				  </button></td>';
-
-
-
-
-//						$logg_all	.= '<td><a href="index.php?m=15&cardid='.$row1['id'].'" class="btn btn-danger w-100">- Изтрий </a></td>';
+					$logg_all	.= '<td><button type="submit" class="btn btn-danger w-100"  id="'.$row1['id'].'" data-toggle="modal"  data-target="#exampleModalCenter">
+									Изтрий чип - '.$row1['id'].'</button></td>';
 				}
 				
 		}
-		//mysqli_free_result($result);
+		mysqli_free_result($result);
 		$logg_all	.= '</table>';
+
 		$logg_all   .='
 		
-		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 		  <div class="modal-content">
-		  <form name="continue" action="index.php?m=9" method="post">
+		  <form method="POST" action="index.php?m=9">
 			<div class="modal-header">
-			  <h5 class="modal-title" id="exampleModalLongTitle">Сигурен ли сте, че искате да изтриете карта/чип за потребител ('.$submit5.')</h5>
+			  <h5 class="modal-title" id="exampleModalLongTitle">Внимание!</h5>
 			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 			  </button>
 			</div>
-			</form>
-			
+			<div class="modal-body"> 
+				<h6 id="modal_body"></h6> 
+			</div> 
 			<div class="modal-footer">
 			  <button type="button" class="btn btn-secondary" data-dismiss="modal">Затвори</button>
-			  <button type="button" class="btn btn-danger" data-target="index.php?m=16&cardid=27" >Изтрий</button>
+			  <input type="submit" class="btn btn-danger" name="submit5" value="Изтрий">
+			  <input type="hidden" name="chipID" id="chipID">
+			  <input type="hidden" name="action" id="action">
 			</div>
+		   </form>
 		  </div>
 		</div>
 	  </div>';
-	  
+
+ 
 	} 			
 
 return $logg_all;

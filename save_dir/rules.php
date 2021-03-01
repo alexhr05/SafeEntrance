@@ -119,10 +119,10 @@ Cъглacнo зaкoнитe зa зaщитa нa личните данни имат
 
 <p class = "text-justify"><b>Контакти</b>
 Ако имате въпроси относно практиките ни за поверителност или някое от правата Ви, описани по-горе, 
-можете да се свържете с нас във форума или на мейл адрес office @ safeentrance.net</p>
+можете да се свържете с нас във форума или на мейл адрес office @ safeentrance.biz</p>
 
 <p class = "text-justify">
-<a class="text-white btn btn-dark px-5 py-2 btn-lg " href="/index.php?m=6" >Сългасен съм и искам да се регистрирам</a><p></p>
+<a class="text-white btn btn-dark px-5 py-2 btn-lg " href="/index.php?m=6" >Съгласен съм и искам да се регистрирам</a><p></p>
 
 
 	</div></div>';

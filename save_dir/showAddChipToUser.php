@@ -26,7 +26,7 @@ function showAddChipToUser($conn){
 
 		// Проверяват се входните данни
 		if ( $action == "act" and checkInt($cardid)=='' and checkInt($userid)=='' and checkText($chipOwnerName)=='' ) {
-			$query = "UPDATE `chips`.`allowchips` SET userid='".addslashes($userid)."', chipOwnerName='".addslashes($chipOwnerName)."' WHERE id='".addslashes($cardid)."'";
+			$query = "UPDATE `chips`.`allowchips` SET userid='".addslashes($userid)."', chipOwnerName='".addslashes($chipOwnerName)."', `date_modify`=now() WHERE id='".addslashes($cardid)."'";
 			$result = mysqli_query($conn, $query);
 			if ( mysqli_affected_rows($conn) ) {
 				// Успешно променен статус на потребител
@@ -38,12 +38,8 @@ function showAddChipToUser($conn){
 				$logg_all .= '<form name="continue" action="index.php?m=9" method="post" class="row g-3">';
 				$logg_all .= '	<button type="submit" class="btn btn-dark px-5 py-2 btn-lg mx-auto" name="continue" value="Продължи" id=submit1>Продължи</button></div>';
 				$logg_all .= '</div></form></div>';
-			
 			}
-			
-
 		}
-	
 	} else {
 
 		$startDate="2020-05-05";
@@ -53,9 +49,8 @@ function showAddChipToUser($conn){
 
 		
 		if ($result && mysqli_num_rows($result) > 0) {
-			$logg_all .= 'Ще добавите карта/чип с номер ('.$cardid.')';
-			$logg_all .= '<br>Показват се само регистрирани и неизтрити потребители.';
-			$logg_all .= '<table width=100%><tr><th colspan="11" class="th-top"> <b>Потребители</b>, брой записи : '.mysqli_num_rows($result).'</th></tr>';
+			$logg_all .= '<br><b>Ще добавите карта/чип с номер ('.$cardid.')</b><br><br>';
+			$logg_all .= '<table width=100%><tr><th colspan="11" class="th-top"> <b>Потребители</b>, показват се само регистрирани и неизтрити потребители. Брой записи : '.mysqli_num_rows($result).'</th></tr>';
 			$logg_all .= '<tr>  <th width=5%  >номер</th>
 								<th width=15% style="text-align:left">Потребителско име</th>
 								<th width=15% style="text-align:left">Истинско име</th>

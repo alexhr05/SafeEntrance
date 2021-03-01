@@ -63,7 +63,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']==true  && $_SESSION['lifetime'
 		$form_log .= '		<div class="form-inline w-100 ">';
 		$form_log .= '			<input type="text" name="username5" value="'.$username5.'" maxlength="50" id="username" class="form-control w-50 mr-1" autofocus>';
 
-		$checkError = checkUsername ($username5);
+		$checkError = checkText ($username5);
 		if ( $checkError != "" && $send_button == "yes" ) {
 			$form_log   .= '<font style="color:DarkRed">'.$checkError.'</font>';
 			$errorsFound .= 'Има грешки.';
@@ -74,12 +74,16 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']==true  && $_SESSION['lifetime'
 		$form_log .= '	<div class="w-100 pt-2 h6 ">';
 		$form_log .= '		<label for="inputEmail4" class="w-25 float-left">Електронна поща:</label>';
 		$form_log .= '		<div class="form-inline w-100 ">';
-		$form_log .= '			<input type="email" id="inputEmail4" name="mail1" value="'.$mail1.'" maxlength="70" class="form-control w-50 mr-1">';
-		
+		$form_log .= '			<input type="text" id="inputEmail" name="mail1" value="'.$mail1.'" maxlength="70" class="form-control w-50 mr-1" >';
+
 		// Проверява дали в полето mail1 са въведени коректни стойности
 		$checkError = checkEmail ($mail1);
 		if ( $checkError != "" && $send_button == "yes" ) {
 			$form_log   .= '<font style="color:DarkRed">'.$checkError.'</font>';
+			$errorsFound .= 'Има грешки.';
+		}
+		if ( !filter_var($mail1, FILTER_VALIDATE_EMAIL) && $send_button == "yes" ) {
+			$form_log   .= '<font style="color:DarkRed">Не сте въвели правилен електронен адрес.</font>';
 			$errorsFound .= 'Има грешки.';
 		}
 		
@@ -89,7 +93,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']==true  && $_SESSION['lifetime'
 		$form_log .= '	<div class="w-100 pt-2 h6 ">';
 		$form_log .= '		<label for="inputEmail4" class="form-label ">Повторете електронната поща:</label>';
 		$form_log .= '		<div class="form-inline w-100 ">';
-		$form_log .= '			<input type="email" id="inputEmail4" name="mail2" value="'.$mail2.'" maxlength="70" class="form-control w-50 mr-1" >';
+		$form_log .= '			<input type="text" id="inputEmail4" name="mail2" value="'.$mail2.'" maxlength="70" class="form-control w-50 mr-1" >';
 		
 		// Проверява дали в полето mail2 са въведени коректни стойности
 		$checkError = checkEmail ($mail2);
@@ -108,7 +112,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']==true  && $_SESSION['lifetime'
 		$form_log .= '			<input type="password" id="inputPassword4" name="pass1" value="'.$pass1.'" maxlength="50" class="form-control w-50 mr-1" >';
 
 		// Проверява дали в полето pass1 са въведени коректни стойности
-		$checkError = checkPassword ($pass1);
+		$checkError = checkText ($pass1);
 		if ( $checkError != "" && $send_button == "yes" ) {
 			$form_log   .= '<font style="color:DarkRed">'.$checkError.'</font>';
 			$errorsFound .= 'Има грешки.';
@@ -122,7 +126,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']==true  && $_SESSION['lifetime'
 		$form_log .= '			<input type="password" name="pass2" value="'.$pass2.'" maxlength="50" id="inputPassword4" class="form-control w-50 mr-1" >';
 
 		// Проверява дали в полето pass2 са въведени коректни стойности
-		$checkError = checkPassword ($pass2);
+		$checkError = checkText ($pass2);
 		if ( $checkError != "" && $send_button == "yes" ) {
 			$form_log   .= '<font style="color:DarkRed">'.$checkError.'</font>';
 			$errorsFound .= 'Има грешки.';
@@ -138,7 +142,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']==true  && $_SESSION['lifetime'
 		$form_log .= '			<input type="text" id="inputName" name="realName" value="'.$realName.'" class="form-control w-50 mr-1" >';           
 		
 		// Проверява дали в полето realName са въведени коректни стойности
-		$checkError = checkRealName ($realName);
+		$checkError = checkText ($realName);
 		if ( $checkError != "" && $send_button == "yes" ) {
 			$form_log   .= '<font style="color:DarkRed">'.$checkError.'</font>';
 			$errorsFound .= 'Има грешки.';
@@ -174,10 +178,9 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']==true  && $_SESSION['lifetime'
 		$form_log .= '		</div>';
 		$form_log .= '	</div>';
 
-		$form_log .= '		<div class="w-100 pt-3 pb-3 h6 ">';
+		$form_log .= '	<div class="w-100 pt-3 pb-3 h6 ">';
 		$form_log .= '		<button type="submit" class="btn btn-dark px-5 py-2 btn-lg " name="send_button">Създай нов профил</button>';
-		$form_log .= '		</div>';       
-
+		$form_log .= '	</div>';       
 
 	// След като е обходена формата и са направени проверките за грешки - ако няма грешки - записва
 	if ( $send_button == "yes" ) {
@@ -204,10 +207,9 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']==true  && $_SESSION['lifetime'
 				$form_log .= '	</div>';				
 			} else {
 	
-				$hiddenPass = md5($pass1);
-				
-				$activationCode = genRandomPassword(12);		// Генерира код с 12 символа
-				
+				$activationCode 	= genRandomPassword(12);		// Генерира код с 12 символа
+				$hiddenPass 		= cryptoPassword($pass1);
+
 				$query = "INSERT INTO `users` (`id`, `registerDate`, `lastVisitDate`,`username`,`realName`,`mail`,`password`,`sendEmail`, `userType`, `activation`) 
 									    values ('', now(), now(), '$username5', '$realName', '$mail1', '$hiddenPass', 'yes', '0', '$activationCode' )";
 				$result = mysqli_query($conn, $query);
@@ -220,7 +222,9 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']==true  && $_SESSION['lifetime'
 					$form_log .= '	<br><font style="font-size:2vw">Регистрация</font><br>';
 					$form_log .= '	<br><br><label>Регистрацията премина успешно. <br>На Вашата електронна поща ще получите линк, с който да активирате профила си. <br>Той ще бъде активен 24 часа.</label>';
 					
-					$server_ip = "http://192.168.1.3";
+					// Публичен адрес
+					$server_ip = "safeentrance.biz";
+					
 					// Изпраща мейл с линк за потвърждение
 					$user_msg_body1 .= "Здравейте, ".$username5.". <br><br>Вие се регистрирахте в сайт $myurl. За да активирате своят акаунт, трябва да потвърдите чрез линк от електронен адрес. Моля, изберете следния линк :";
 					$user_msg_body1 .= "<br><br>".$server_ip."/index.php?m=66&keyss=$activationCode&mail1=$mail1";
@@ -231,11 +235,11 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']==true  && $_SESSION['lifetime'
 					$headers = "From: Alex<Alexhr05@gmail.com>\r\n";
 					$headers .= "MIME-Version: 1.0\r\n";
 					$headers .= "Content-Type: text/html; charset=\"UTF-8\"\r\n";
-					$headers .= "Bcc: peterhr@gmail.com\r\n";	// Слага скрито копие за тестове
+					$headers .= "Bcc: alexhr05@gmail.com\r\n";	// Слага скрито копие за тестове
 					$headers1251 = iconv("UTF-8", "CP1251", $headers );					
 					$recipient = $mail1;
 					
-					mail($recipient, $subject1, $user_msg_body1, $headers1251);	
+					mail($recipient, $subject1, $user_msg_body1, $headers);	
 				
 					$form_log .= "</div></div>";
 					return $form_log;				

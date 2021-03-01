@@ -5,8 +5,6 @@ $menu = "";
 
 function get_menu() {
 $menu = '
-
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark pl-5 pr-5">
 	<a class="navbar-brand" href="index.php?m=0"><img src="img/Logo_1_resize.png" class="rounded" width=50px height=50px></a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,52 +18,57 @@ $menu = '
         
 		
 		
-		
+		<li class="nav-item pl-2">
+            <a class="nav-link" href="/index.php?m=8">За нас</a>
+        </li>
 		<li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				Проекти
 			</a>
 			<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-				<a class="dropdown-item" href="#">Управление на Къщи</a>
-				<a class="dropdown-item" href="#">Управление на Сгради и Офиси</a>
-				<a class="dropdown-item" href="#">Управление на Малки предприятия</a>
+				<a class="dropdown-item" href="/index.php?m=103">Управление на къщи</a>
+				<a class="dropdown-item" href="/index.php?m=104">Управление на сгради и офиси</a>
+				<a class="dropdown-item" href="/index.php?m=105">Управление на малки предприятия</a>
 			</div>
 		</li>
         <li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				Контрол на Достъпа</a>
+				Контрол на достъпа</a>
 			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
 				<a class="dropdown-item" href="/index.php?m=101">Електронни брави</a>
 				<a class="dropdown-item" href="/index.php?m=102">Контрол и управление</a>
 			</div>
         </li>
-        <li class="nav-item pl-2">
-            <a class="nav-link" href="/index.php?m=8">За нас</a>
-        </li>
-        <li class="nav-item pl-2">
-            <a class="nav-link" href="/index.php?m=7">Контакти</a>
-        </li>';
-	if ( isset($_SESSION['auth']) && $_SESSION['auth']==true  && $_SESSION['lifetime'] > time() and $_SESSION['userType']==$GLOBALS["userTypeAdmin"] )
+        
+        ';
+	if ( isset($_SESSION['auth']) && $_SESSION['auth']==true  && $_SESSION['lifetime'] > time() and $_SESSION['userType']>=1 )
     $menu .= ' 
         <li class="nav-item pl-2">
             <a class="nav-link" href="/index.php?m=14">Отключване</a>
-        </li>
+        </li>';
 
+	if ( isset($_SESSION['auth']) && $_SESSION['auth']==true  && $_SESSION['lifetime'] > time() and $_SESSION['userType']==$GLOBALS["userTypeAdmin"] )
+    $menu .= ' 
 
-				<li class="nav-item dropdown order-1 " id="dropdownMenu1" class="btn btn-outline-secondary dropdown-toggle">
+		<li class="nav-item dropdown " id="dropdownMenu1" class="btn btn-outline-secondary dropdown-toggle">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Администраторски Панел
+                            Администраторски панел
                         </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="/index.php?m=13">Потребители</a>
                         <a class="dropdown-item" href="/index.php?m=9">Разрешени чипове</a>
                         <a class="dropdown-item" href="/index.php?m=11">Регистър на влизания</a>
                         <a class="dropdown-item" href="/index.php?m=12">Справки</a>
-                        <a class="dropdown-item" href="/index.php?m=5">Изпращане на електронни съобщения</a>
+                        <a class="dropdown-item" href="/index.php?m=19">Врати</a>
+                        <a class="dropdown-item" href="/index.php?m=20">Изпращане на електронни съобщения</a>
                     </div>
-                </li>';
+        </li>';
 
-	$menu .= '	</ul>';
+    $menu .= '
+        <li class="nav-item pl-2">
+            <a class="nav-link" href="/index.php?m=7">Контакти</a>
+        </li>
+    </ul>';
 
 	
 	// Дали сме логнати
@@ -82,7 +85,7 @@ $menu = '
                     .$_SESSION['userfulname'].'
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="/index.php?m=5">Профил</a>
+                        <a class="dropdown-item"  href="/index.php?m=5">Профил</a>
                         <a class="dropdown-item"  href="/index.php?m=10">Изход</a>
                     </div>
                 </li>
@@ -138,8 +141,7 @@ $menu = '
 				Регистрация
 				</a>
 			</li>
-		</ul>
-';
+		</ul>';
 	$menu .= 	'</div></nav>';
 
 	return $menu;

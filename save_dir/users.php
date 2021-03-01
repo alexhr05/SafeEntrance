@@ -11,10 +11,11 @@
 function showUsers($conn){
 
 	$logg_all = '
-		<div class="container ">
+		<div class="container w-100 ">
 			<div class=" w-100 p-2 text-black rounded ">';
 	$action 	= "0";
 	$id 		= "0";
+	$sendEmail	= "";
 	$userType	= "";
 	$deleted	= "";
 
@@ -24,6 +25,10 @@ function showUsers($conn){
 		$action = $_GET["action"];
 	if ( isset($_GET['id'] ) )
 		$id = $_GET["id"];
+	if ( isset($_GET['sendEmail'] ) )
+		$sendEmail = $_GET["sendEmail"];
+	if ( isset($_GET['deleted'] ) )
+		$deleted = $_GET["deleted"];
 	if ( isset($_GET['userType'] ) ) {
 		$userType = $_GET["userType"];
 		if ( checkInt($userType) != '' )
@@ -86,16 +91,16 @@ function getUsers($startDate, $endDate, $poleParam, $conn){
 		$tablica = 'Последни потребители на сайта';
 	
 	if ($result && mysqli_num_rows($result) > 0) {
-		$logg_all .= '<table width=100%><tr><th colspan="11" class="th-top"> <b>'.$tablica.'</b>, брой записи : '.mysqli_num_rows($result).'</th></tr>';
-		$logg_all .= '<tr>  <th width=5%  >номер</th>
+		$logg_all .= '<table width=100%><tr><th colspan="11" class="th-top h5"> <b>'.$tablica.'</b>, брой записи : '.mysqli_num_rows($result).'</th></tr>';
+		$logg_all .= '<tr>  <th width=5%  >Номер</th>
 							<th width=15% >Дата регистрация</th>
 							<th width=15% >Последно активен</th>
 							<th width=15% style="text-align:left">Потребителско име</th>
 							<th width=15% style="text-align:left">Истинско име</th>
 							<th width=15% style="text-align:left">Електронна поща</th>
-							<th width=5%  >sendEmail</th>
-							<th width=5%  >userType</th>
-							<th width=10% >Deleted</th>
+							<th width=5%  >Изпрати имейл</th>
+							<th width=5%  >Ниво на достъп</th>
+							<th width=10% >Изтрит акаунт на потребител</th>
 							</tr>';
 		while ($row1 = mysqli_fetch_assoc($result) ) {
 			if ( $row1['deleted'] == 'yes' )

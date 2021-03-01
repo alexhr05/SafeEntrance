@@ -2,20 +2,18 @@
 
 
 function verification ($mail1, $keyss, $conn){
-$form_log = "";
-
 	$form_log = '
 		<div class="container h-75 d-flex align-items-center justify-content-center ">
 			<div class=" w-50 p-4 bg-secondary text-white rounded ">';
 	$form_log .= '<form name="registration_fm" action="" method="post">';
 	$form_log .= '	<br><font style="font-size:2vw">Регистрация</font><br>';
 
-if ( $keyss != "" and checkUsername ($keyss) and checkEmail ($mail1) ) {
-	$form_log .= '	<br>Въведени данни: '.$mail1.'<br>';
+	if ( $keyss != "" and checkText ($keyss) == "" and checkEmail ($mail1) == "" ) {
+		$form_log .= '	<br>Въведени данни: '.$mail1.'<br>';
 
 	// select да провери дали keyss Получено от линка е записано на някой потребител
 
-			$query= "select *,HOUR (TIMEDIFF(now(),registerDate)) as HourDiff from `users` where `mail` ='".$mail1."' and `activation` ='".$keyss."'";
+			$query= "select *,HOUR (TIMEDIFF(now(),registerDate)) as HourDiff from `users` where `mail` ='".$mail1."' and `activation` ='".$keyss."'  and `userType`='0'";
 			$result = mysqli_query($conn, $query);
 			if ($result && mysqli_num_rows($result) > 0) { // Ако има някакъв резултат, значи са правилни полетата mail1 и keyss
 				$row5 = mysqli_fetch_assoc($result);

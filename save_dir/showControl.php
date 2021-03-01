@@ -2,10 +2,10 @@
 function showControl () {
 	$form_show = '
 	<div class="container h-100 w-100 ">
-		<div class="w-100 mt-4 p-4 bg-secondary text-white rounded">
+		<div class="w-100 mt-4  mb-4 p-4 bg-secondary text-white rounded">
 
 		<h1>Контрол и управление</h1>
-		<h3>Контрол от мобилно приложение</h3>
+		<h3>Контрол от мобилно приложение</h3><br>
 		<p class="text-justify">
 			При такива умни електрически брави комуникацията с външния свят е възможно да се осъществява и чрез Bluetooth безжичен интерфейс, 
 			който се поддържа от повечето смартфони и лаптопи. Важно предимство е, че нямате нужда от интернет връзка. 
@@ -13,7 +13,7 @@ function showControl () {
 			Обхватът на Bluetooth комуникацията обикновено не надвишава 15-20 метра и така се ограничава допълнително 
 			възможността от неправомерен и неоторизиран опит за достъп.
 		</p>
-			<img src="img/bravi2/brava_telefom_3_bluetooth.jpg" height=300px>
+			<img src="img/bravi2/brava_telefom_3_bluetooth.jpg" height=300px><br><br>
 
 
 		<h3>Контрол от дистанция</h3>
@@ -23,7 +23,7 @@ function showControl () {
 			Достъпът може да се програмира за еднократно влизане, по време, като може да са повтарящи се събития, ежедневно, ежеседмично. 
 			Също така може да се ограничи достъпа до определени помещения, според конкретния случай.
 		</p>
-			<img src="img/bravi2/brava4.jpg" height=300px>
+			<img src="img/bravi2/brava4.jpg" height=300px><br><br>
 			
 			
 		<h3>Отваряне по много различни начини</h3>
@@ -34,7 +34,7 @@ function showControl () {
 			При разпознаване на лице е възможно да заредим снимка на потребителя, който трябва да може да влезе в обекта дори когато сме на 
 			другия край на света. Няма нужда да му предаваме физически ключ, карта или нещо друго, за да си отключи входната врата.
 		</p>
-			<img src="img/bravi2/brava11.jpg" height=300px>
+			<img src="img/bravi2/brava11.jpg" height=300px><br><br>
 
 		<p class="text-justify">
 			Цялата система за контрол на достъпа е свързана към централен сървър. Четецът и електрическата брава могат напълно самостоятелно
@@ -44,9 +44,7 @@ function showControl () {
 			Отделно вратата ще изпрати сигнал ако бъде отворена. Тя може да бъде разбита и веднага ще се получи сигнал за аларма.
 		</p>
 			<img src="img/bravi2/dispecher.jpg" height=300px>
-			<img src="img/bravi2/kradets.jpg" height=300px>
-
-
+			<img src="img/bravi2/kradets.jpg" height=300px><br><br>
 ';
 
 	$form_show .= "</div></div>";

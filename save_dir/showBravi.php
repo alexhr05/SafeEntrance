@@ -4,7 +4,7 @@ function showBravi () {
 	<div class="container h-100 w-100 ">
 		<div class="w-100 mt-4 mb-4 p-4 bg-secondary text-white rounded">
 
-		<h1>Електронни брави за контролиран достъп до всички помещения и сгради</h1>
+		<h1>Електронни брави за контролиран достъп до всички помещения и сгради</h1><br>
 		<p class="text-justify">
 		Електронните брави са пълноценни заключващи устройства, тялото на които съдържа всички механични и електронни компоненти, 
 			необходими за тяхната работа. 
@@ -16,7 +16,7 @@ function showBravi () {
 		<p class="text-justify">
 		Заключващият механизъм може да бъде няколко вида. Първият модел е : <b>Електрически насрещник</b> </p>
 			<img src="img/bravi2/nasreshtnik01.jpg" height=300px>
-			<img src="img/bravi2/nasreshtnik02.jpg" height=300px>
+			<img src="img/bravi2/nasreshtnik02.jpg" height=300px><br><br>
 		<p class="text-justify">
 		Този модел обикновенно се използва за контролиран достъп до не особено важни помещения или където може да се направи компромис със сигурността. 
 		Примерно може да бъде входна врата на жилищен блок.</p>
@@ -25,7 +25,7 @@ function showBravi () {
 		е по-голяма задържащата сила и по този начин е и по-сигурно заключването.
 		</p>
 			<img src="img/bravi2/magnitno_zakluchvane.png" height=300px>
-			<img src="img/bravi2/magnitno_zakluchvane2.png" height=300px>
+			<img src="img/bravi2/magnitno_zakluchvane2.png" height=300px><br><br>
 		<p class="text-justify">
 		Този модел е малко по-скъп от предишния, но за сметка на това е по-сигурен. Може да се ползва за заключване на входни врати на жилищни блокове, 
 		офиси, мазета, тавани, гаражи и други. 
@@ -36,7 +36,7 @@ function showBravi () {
 		Последният вариант, който ще разгледаме е <b>Дроп-болт</b>.
 		</p>		
 			<img src="img/bravi2/drop_bolt_1.jpg" height=300px>
-			<img src="img/bravi2/drop_bolt_na_vrata1.jpg" height=300px>			
+			<img src="img/bravi2/drop_bolt_na_vrata1.jpg" height=300px><br><br>		
 		<p class="text-justify">
 		Това е най-сигурния начин от досега разгледаните. Може да се използва за жилищни сгради, офиси, банки, преприятия.
 		</p>		
@@ -49,11 +49,12 @@ function showBravi () {
 		Има варианти, в които електронно се блокира движение на обикновенния ключ или движение на дръжката на вратата. 
 		Но тези модели постепенно се изместват от новите изцяло електрически модели.
 		</p>		
-			<img src="img/bravi2/konvencionalnaBrava.png" height=300px>			
+		<img  src="img/bravi2/BravaSKod.jpg" height=300px><br><br>
+	';
 
-';
+	$form_show .= '
+	</div></div>';
 
-	$form_show .= "</div></div>";
 	return $form_show;
 }
 ?>

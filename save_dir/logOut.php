@@ -2,16 +2,15 @@
 function logOut () {
 
 	$form_log = '
-			<div class="container pt-5  h-50 d-flex align-items-center justify-content-center ">
-				<div class=" w-75 h-50 bg-secondary text-white rounded d-flex align-items-center justify-content-center ">';
+			<div class="container  mt-5 ">
+				<div class=" w-75 p-5 bg-secondary text-white rounded d-flex align-items-center justify-content-center ">';
 
 	if (isset($_SESSION['auth']) && $_SESSION['auth']==true ) {
 		// Ако потребителя е вече логнат - излиза
 
 		$form_log .= '
-			<p>Здравейте, '.$_SESSION['userfulname'].'
+			Здравейте, '.$_SESSION['userfulname'].'
 				<br>Вие току що се разлогнахте от сайта. Save Entrance Ви пожелава Приятен Ден.
-			</p>
 			</div>';
 
 		// Разлогва
@@ -24,9 +23,7 @@ function logOut () {
 		$m=0;		// Задава да се покаже начален екран при последващо опресняване.	
 	} else {
 		$form_log .= '
-			<p>
-				Вече, сте Излезнали като потребител от сайта. Ако искате да Влезете, ползвайте менюто ВХОД, горе вдясно.
-			</p>
+				Вече, сте излезнали от Вашия потребителски профил от сайта. <br>Ако искате да Влезете, ползвайте менюто ВХОД, горе вдясно.
 			</div>';
 		
 	}

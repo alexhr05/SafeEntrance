@@ -5,34 +5,6 @@ function showSpravki($conn){
 		<div class="container ">
 			<div class=" w-100 p-2 text-black rounded ">';
 	$action 	= "0";
-/*	$id 		= "0";
-	$userType	= "";
-	$deleted	= "";
-	// Прочитаме параметри от линк-а
-	if ( isset($_GET['action'] ) )
-		$action = $_GET["action"];
-	if ( isset($_GET['id'] ) )
-		$id = $_GET["id"];
-	if ( isset($_GET['userType'] ) )
-		$userType = $_GET["userType"];
-	if ( isset($_GET['sendEmail'] ) )
-		$sendEmail = $_GET['sendEmail'];
-	if ( isset($_GET['deleted'] ) )
-		$deleted = $_GET['deleted'];
-
-
-	// Решава каква заявка за кои параметри да се update-не
-	if ( $action == "act" and isset($_GET['userType'] ) ) {
-		$userType = $userType + 1;
-		if ( $userType >x $GLOBALS["userTypeAdmin"] )	// Ако е достигнал лимит за админ, сваля го на НУЛА
-			$userType = 0;
-		$query_param = "userType= '".$userType."' ";
-	}
-	//if ( $action == "act" and isset($_GET['sendEmail'] ) )
-
-		if ( $action == "act" and isset($_GET['deleted'] ) )
-		$query_param = "deleted= '".$deleted."' ";
-	*/
 	$mySelect="";
 	
 	if ( isset($_POST['mySelect'] ) )
@@ -76,7 +48,7 @@ function showSpravki($conn){
             $toDate=date("Y-m-d");
             $logg_all .= getUsers( $fromDate,$toDate, 'registerDate' , $conn)."<br>";
 
-			// Прави справка за регистрирани потребители за дадения периода 
+			// Прави справка за потребители посетили сайта за дадения периода 
             $toDate=date("Y-m-d");
             $logg_all .= getUsers( $fromDate,$toDate, 'lastVisitDate' , $conn)."<br>";
 
@@ -87,6 +59,9 @@ function showSpravki($conn){
 			// Прави справка за ново разрешени чипове за дадения период 
 			$toDate=date("Y-m-d");
 			$logg_all .= getAllowChips( $fromDate,$toDate, $conn)."<br>";
+			
+			// Показва врати, статус на всички
+			$logg_all .= getDoors($conn)."<br>";
 			
 			$logg_all	.= '</div></div>';
 			$logg_all	.= '<p id="demo"></p>';
